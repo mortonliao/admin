@@ -1,0 +1,102 @@
+
+/* Keep everything the same */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font: bold 14px Arial, sans-serif;
+}
+
+.container {
+  padding:10px;
+  width:425px;
+  height:auto;
+  display: block;
+}
+
+.row {
+  display:block;
+  width:100%;
+  min-height:30px;
+  height:auto;
+}
+
+.btn {
+  float: left;
+  position: relative;
+  top: 0;
+  cursor: pointer;
+  border-radius: 3px;
+  box-shadow: 0px 4px rgba(0, 0, 0, 0.2);
+  
+  color: #888;
+
+  text-align: center;
+
+  /* so nobody selects the inside text on button */
+  user-select: none;
+
+  /* Smoothing out hover using css3 transitions, if not, the pressed button effect looks a bit hard */
+  transition: all 0.2s ease;
+}
+
+.btn-medium {
+  line-height: 30px;
+  width: 134px;
+  height: 30px;
+  font-size: 120%;
+  
+  /* border-radius:2em; */
+}
+
+.info {
+  background: #b3acac;
+  box-shadow: 0px 5px #8a878a;
+  color:black;
+  margin-right: 2px;
+}
+
+.info:hover {
+  background: orange;
+  box-shadow: 0px 4px #af7a2b;
+  color:black;
+}
+
+/* Imitate a pressed effect for buttons */
+.info:active {
+  top: 4px;
+  box-shadow: 0px 0px #af7a2b;
+}
+
+.separator{
+	margin:0px;
+	background: white;
+	width: 4px;
+}
+
+.ztree li span.button.switch.level0 {
+	display:none;
+}
+.ztree li span {
+	font-size: 14px;
+	font-family: serif;
+}
+.ztree li ul{
+	padding: 0px;
+}
+.ztree li .level0 {
+	margin-bottom: 5px;
+	margin-left:0px;
+	margin-right:0px;
+}
+
+.ztree li .level1 {
+	margin-bottom: 3px;
+	margin-left:0px;
+	margin-right:0px;
+}
+.ztree li a:hover{
+	text-decoration:none;
+	background: #CFCFCF;
+	border: 1px #CFCFCF solid;
+}
