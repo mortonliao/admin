@@ -1,5 +1,9 @@
 package com.longhum.admin.domain;
-
+/**
+ * @author liaoxiaohu
+ * @date 2017年5月14日
+ * @info
+ */
 public class ResourceMenu {
 	private int id;
 	private int pId;

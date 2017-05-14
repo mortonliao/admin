@@ -10,7 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.longhum.admin.domain.ResourceMenu;
-
+/**
+ * @author liaoxiaohu
+ * @date 2017年5月14日
+ * @info
+ */
 @Controller
 @RequestMapping("/system")
 public class SystemController {

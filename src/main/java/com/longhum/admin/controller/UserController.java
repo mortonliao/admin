@@ -8,7 +8,11 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.longhum.admin.domain.ResourceMenu;
-
+/**
+ * @author liaoxiaohu
+ * @date 2017年5月14日
+ * @info
+ */
 @Controller
 @RequestMapping("/user")
 public class UserController {
