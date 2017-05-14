@@ -1,7 +1,11 @@
 package com.longhum.admin.domain;
 
 import java.io.Serializable;
-
+/**
+ * @author liaoxiaohu
+ * @date 2017年5月14日
+ * @info
+ */
 public class ResponseResult implements Serializable{
 	private static final long serialVersionUID = 900402794957373941L;
 	private int code;
