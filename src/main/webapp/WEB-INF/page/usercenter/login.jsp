@@ -44,11 +44,11 @@
 			</div> -->
 			<div style="margin-bottom: 20px">
 				<%-- <a href="${ctx}/user/login" class="easyui-linkbutton"><span>登陆</span></a> --%>
-				<input type="submit" value="登陆"/>
+				<input type="submit" value="登陆" class="easyui-linkbutton"/>
 			</div>
 			<div >
 				<span class="msg">
-				账号错误
+				${msg}
 				</span>
 			</div>
 		</form>

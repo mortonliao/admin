@@ -44,10 +44,9 @@ public class UserController {
 	}
 
 	@PostMapping("/login")
-	public String login(@Valid TUser user, BindingResult bindingResult, RedirectAttributes redirectAttributes,
-			ModelMap map) {
+	public String login(@Valid TUser user, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		if (bindingResult.hasErrors()) {
-			return "login";
+			return "/user/login";
 		}
 		String loginName = user.getUsername();
 		UsernamePasswordToken token = new UsernamePasswordToken(loginName, user.getPassword());
@@ -58,40 +57,16 @@ public class UserController {
 			// 每个Realm都能在必要时对提交的AuthenticationTokens作出反应
 			// 所以这一步在调用login(token)方法时,它会走到MyRealm.doGetAuthenticationInfo()方法中,具体验证方式详见此方法
 			currentUser.login(token);
-		} catch (UnknownAccountException uae) {
-			redirectAttributes.addFlashAttribute("message", "未知账户");
-		} catch (IncorrectCredentialsException ice) {
-			redirectAttributes.addFlashAttribute("message", "密码不正确");
 		} catch (LockedAccountException lae) {
-			redirectAttributes.addFlashAttribute("message", "账户已锁定");
+			redirectAttributes.addFlashAttribute("msg", "账户已锁定");
 		} catch (ExcessiveAttemptsException eae) {
-			redirectAttributes.addFlashAttribute("message", "用户名或密码错误次数过多");
+			redirectAttributes.addFlashAttribute("msg", "用户名或密码错误次数过多");
 		} catch (AuthenticationException ae) {
 			// 通过处理Shiro的运行时AuthenticationException就可以控制用户登录失败或密码错误时的情景
 			ae.printStackTrace();
-			redirectAttributes.addFlashAttribute("message", "用户名或密码不正确");
+			redirectAttributes.addFlashAttribute("msg", "用户名或密码不正确");
 		}
-		// 验证是否登录成功
-		if (currentUser.isAuthenticated()) {
-			return "redirect:/index";
-		} else {
-			token.clear();
-			return "redirect:/user/login";
-		}
-		/*
-		 * user = userService.findById(1);
-		 * System.out.println(user.getUsername()); UUser uuser =
-		 * uuserService.findById(1); System.out.println(uuser.getNickName());
-		 * List<ResourceMenu> list = new ArrayList<ResourceMenu>(); ResourceMenu
-		 * menu1 = new ResourceMenu(1, 0, "会员管理"); ResourceMenu menu2 = new
-		 * ResourceMenu(2, 0, "系统管理"); ResourceMenu menu3 = new ResourceMenu(3,
-		 * 0, "报表管理"); ResourceMenu menu4 = new ResourceMenu(4, 0, "监控管理");
-		 * 
-		 * list.add(menu1); list.add(menu2); list.add(menu3); list.add(menu4);
-		 * 
-		 * map.put("menuList", list);
-		 */
-		// return "index";
+		return "redirect:/user/login";
 	}
 
 	@GetMapping("/logout")

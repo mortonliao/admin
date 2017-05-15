@@ -50,8 +50,10 @@ function changeMainMenu(mainMenu){
 				</div>
 		</div>
 		<div style="float: right;line-height: 50px;margin-right: 10px;">
-			<span>admin</span>
-			<a href="#">退出</a>
+			<shiro:user>  
+				<shiro:principal/> &nbsp;<a href="/user/logout">退出</a>
+			</shiro:user> 
+			  
 		</div>
 	</div>
 
