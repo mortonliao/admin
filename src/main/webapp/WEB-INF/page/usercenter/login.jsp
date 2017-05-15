@@ -31,24 +31,28 @@
 		<div>
 			<h1>后台登陆</h1>
 		</div>
-		<div style="margin-bottom: 20px">
-			<input class="easyui-textbox" type="text" data-options="prompt:'输入账号'">
-		</div>
-		<div style="margin-bottom: 20px">
-			<input class="easyui-textbox" type="password" data-options="prompt:'输入密码'">
-		</div>
-		<!-- <div style="margin-bottom: 20px">
-			<input class="easyui-textbox" type="text" data-options="prompt:'验证码'" style="width: 30%;float: left;">
-			
-		</div> -->
-		<div style="margin-bottom: 20px">
-			<a href="${ctx}/user/login" class="easyui-linkbutton"><span>登陆</span></a>
-		</div>
-		<div >
-			<span class="msg">
-			账号错误
-			</span>
-		</div>
+		<form action="/user/login" method="post">
+			<div style="margin-bottom: 20px">
+			<input class="easyui-textbox" type="text" name="username" data-options="prompt:'输入账号'" />
+			</div>
+			<div style="margin-bottom: 20px">
+				<input class="easyui-textbox" name="password" type="password" />
+			</div>
+			<!-- <div style="margin-bottom: 20px">
+				<input class="easyui-textbox" type="text" data-options="prompt:'验证码'" style="width: 30%;float: left;">
+				
+			</div> -->
+			<div style="margin-bottom: 20px">
+				<%-- <a href="${ctx}/user/login" class="easyui-linkbutton"><span>登陆</span></a> --%>
+				<input type="submit" value="登陆"/>
+			</div>
+			<div >
+				<span class="msg">
+				账号错误
+				</span>
+			</div>
+		</form>
+		
 		
 		<!-- <div style="bottom: 10px;">
 			<span style="font-family:Arial;">©</span>

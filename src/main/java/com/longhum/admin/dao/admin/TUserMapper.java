@@ -14,4 +14,7 @@ public interface TUserMapper {
     int updateByPrimaryKeySelective(TUser record);
 
     int updateByPrimaryKey(TUser record);
+
+	TUser findByLoginName(String currentLoginName);
+	
 }
