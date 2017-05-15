@@ -9,42 +9,39 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import com.alibaba.druid.pool.DruidDataSource;
 
 /**
- * 
  * @author liaoxiaohu
  * @date 2017年5月14日
- * @info 主库数据源配置
+ * @info 从库创建于配置
  */
 @Configuration
 // 扫描 Mapper 接口并容器管理
-@MapperScan(basePackages = MasterDataSourceConfig.PACKAGE, sqlSessionFactoryRef = "masterSqlSessionFactory")
-public class MasterDataSourceConfig {
+@MapperScan(basePackages = UserDataSourceConfig.PACKAGE, sqlSessionFactoryRef = "userSqlSessionFactory")
+public class UserDataSourceConfig {
 
-    // 精确到 master 目录，以便跟其他数据源隔离
-    static final String PACKAGE = "com.longhum.admin.dao.admin";
-    static final String MAPPER_LOCATION = "classpath:mapper/admin/*.xml";
+    // 精确到 cluster 目录，以便跟其他数据源隔离
+    static final String PACKAGE = "com.longhum.admin.dao.user";
+    static final String MAPPER_LOCATION = "classpath:mapper/user/*.xml";
 
-    @Value("${master.datasource.url}")
+    @Value("${cluster.datasource.url}")
     private String url;
 
-    @Value("${master.datasource.username}")
+    @Value("${cluster.datasource.username}")
     private String user;
 
-    @Value("${master.datasource.password}")
+    @Value("${cluster.datasource.password}")
     private String password;
 
-    @Value("${master.datasource.driverClassName}")
+    @Value("${cluster.datasource.driverClassName}")
     private String driverClass;
 
-    @Bean(name = "masterDataSource")
-    @Primary
-    public DataSource masterDataSource() {
+    @Bean(name = "userDataSource")
+    public DataSource userDataSource() {
         DruidDataSource dataSource = new DruidDataSource();
         dataSource.setDriverClassName(driverClass);
         dataSource.setUrl(url);
@@ -53,20 +50,18 @@ public class MasterDataSourceConfig {
         return dataSource;
     }
 
-    @Bean(name = "masterTransactionManager")
-    @Primary
-    public DataSourceTransactionManager masterTransactionManager() {
-        return new DataSourceTransactionManager(masterDataSource());
+    @Bean(name = "userTransactionManager")
+    public DataSourceTransactionManager userTransactionManager() {
+        return new DataSourceTransactionManager(userDataSource());
     }
 
-    @Bean(name = "masterSqlSessionFactory")
-    @Primary
-    public SqlSessionFactory masterSqlSessionFactory(@Qualifier("masterDataSource") DataSource masterDataSource)
+    @Bean(name = "userSqlSessionFactory")
+    public SqlSessionFactory userSqlSessionFactory(@Qualifier("userDataSource") DataSource userDataSource)
             throws Exception {
         final SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
-        sessionFactory.setDataSource(masterDataSource);
+        sessionFactory.setDataSource(userDataSource);
         sessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver()
-                .getResources(MasterDataSourceConfig.MAPPER_LOCATION));
+                .getResources(UserDataSourceConfig.MAPPER_LOCATION));
         return sessionFactory.getObject();
     }
 }

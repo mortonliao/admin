@@ -9,9 +9,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.longhum.admin.domain.ResourceMenu;
-import com.longhum.admin.model.User;
-import com.longhum.admin.model.UserInfo;
-import com.longhum.admin.service.UserInfoService;
+import com.longhum.admin.model.TUser;
+import com.longhum.admin.model.UUser;
+import com.longhum.admin.service.UUserService;
 import com.longhum.admin.service.UserService;
 /**
  * @author liaoxiaohu
@@ -24,15 +24,16 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	
 	@Autowired
-	private UserInfoService userInfoService;
+	private UUserService uuserService;
 	
 	@RequestMapping("/login")
     public String login(ModelMap map){
-		User user = userService.findById(1);
+		TUser user = userService.findById(1);
 		System.out.println(user.getUsername());
-		UserInfo userInfo = userInfoService.findById(1);
-		System.out.println(userInfo.getUsername());
+		UUser uuser = uuserService.findById(1);
+		System.out.println(uuser.getNickName());
 		List<ResourceMenu> list = new ArrayList<ResourceMenu>();
 		ResourceMenu menu1 = new ResourceMenu(1, 0, "会员管理");
 		ResourceMenu menu2 = new ResourceMenu(2, 0, "系统管理");

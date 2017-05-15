@@ -1,7 +1,7 @@
 package com.longhum.admin.service;
 
-import com.longhum.admin.model.User;
+import com.longhum.admin.model.TUser;
 
 public interface UserService {
-	User findById(Integer id);
+	TUser findById(Integer id);
 }

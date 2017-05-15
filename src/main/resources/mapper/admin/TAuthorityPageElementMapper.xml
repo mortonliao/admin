@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.longhum.admin.dao.admin.TAuthorityPageElementMapper" >
+  <resultMap id="BaseResultMap" type="com.longhum.admin.model.TAuthorityPageElement" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="authority_id" property="authorityId" jdbcType="INTEGER" />
+    <result column="page_element_id" property="pageElementId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, authority_id, page_element_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_authority_page_element
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_authority_page_element
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.longhum.admin.model.TAuthorityPageElement" >
+    insert into t_authority_page_element (id, authority_id, page_element_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{authorityId,jdbcType=INTEGER}, #{pageElementId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.longhum.admin.model.TAuthorityPageElement" >
+    insert into t_authority_page_element
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="authorityId != null" >
+        authority_id,
+      </if>
+      <if test="pageElementId != null" >
+        page_element_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="authorityId != null" >
+        #{authorityId,jdbcType=INTEGER},
+      </if>
+      <if test="pageElementId != null" >
+        #{pageElementId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.longhum.admin.model.TAuthorityPageElement" >
+    update t_authority_page_element
+    <set >
+      <if test="authorityId != null" >
+        authority_id = #{authorityId,jdbcType=INTEGER},
+      </if>
+      <if test="pageElementId != null" >
+        page_element_id = #{pageElementId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.longhum.admin.model.TAuthorityPageElement" >
+    update t_authority_page_element
+    set authority_id = #{authorityId,jdbcType=INTEGER},
+      page_element_id = #{pageElementId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
