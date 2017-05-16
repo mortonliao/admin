@@ -1,5 +1,7 @@
 package com.longhum.admin.dao.admin;
 
+import java.util.Set;
+
 import com.longhum.admin.model.TRole;
 
 public interface TRoleMapper {
@@ -14,4 +16,6 @@ public interface TRoleMapper {
     int updateByPrimaryKeySelective(TRole record);
 
     int updateByPrimaryKey(TRole record);
+    Set<String> getRolesByUserId(Integer userId);
+
 }

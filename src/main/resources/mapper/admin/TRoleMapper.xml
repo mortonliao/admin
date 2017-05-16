@@ -16,6 +16,27 @@
     from t_role
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="getRolesByUserId" resultType="java.lang.String" parameterType="java.lang.Integer" >
+    SELECT 
+	    name
+	FROM
+	    t_role
+	WHERE
+	    id IN (SELECT 
+	            role_id
+	        FROM
+	            t_user_group_role
+	        WHERE
+	            user_group_id IN (SELECT 
+	                    user_group_id
+	                FROM
+	                    t_user_group_user
+	                WHERE
+	                    user_id = #{userId}
+				)
+		   )
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_role
     where id = #{id,jdbcType=INTEGER}

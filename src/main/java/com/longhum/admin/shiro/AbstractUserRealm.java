@@ -29,7 +29,7 @@ public abstract class AbstractUserRealm extends AuthorizingRealm {
     @Autowired
     private TUserMapper userDao;
     //获取用户组的权限信息
-    public abstract UserRolesAndPermissions doGetGroupAuthorizationInfo(TUser user);
+    //public abstract UserRolesAndPermissions doGetGroupAuthorizationInfo(TUser user);
     //获取用户角色的权限信息
     public abstract UserRolesAndPermissions doGetRoleAuthorizationInfo(TUser user);
 
@@ -44,11 +44,11 @@ public abstract class AbstractUserRealm extends AuthorizingRealm {
         //从数据库中获取当前登录用户的详细信息
         TUser userInfo = userDao.findByLoginName(currentLoginName);
         if (null != userInfo) {
-            UserRolesAndPermissions groupContainer = doGetGroupAuthorizationInfo(userInfo);
-            UserRolesAndPermissions roleContainer = doGetGroupAuthorizationInfo(userInfo);
-            userRoles.addAll(groupContainer.getUserRoles());
+            //UserRolesAndPermissions groupContainer = doGetGroupAuthorizationInfo(userInfo);
+            UserRolesAndPermissions roleContainer = doGetRoleAuthorizationInfo(userInfo);
+            //userRoles.addAll(groupContainer.getUserRoles());
             userRoles.addAll(roleContainer.getUserRoles());
-            userPermissions.addAll(groupContainer.getUserPermissions());
+            //userPermissions.addAll(groupContainer.getUserPermissions());
             userPermissions.addAll(roleContainer.getUserPermissions());
         } else {
             throw new AuthorizationException();

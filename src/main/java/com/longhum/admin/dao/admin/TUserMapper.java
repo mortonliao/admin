@@ -1,5 +1,7 @@
 package com.longhum.admin.dao.admin;
 
+import java.util.Set;
+
 import com.longhum.admin.model.TUser;
 
 public interface TUserMapper {
@@ -16,5 +18,5 @@ public interface TUserMapper {
     int updateByPrimaryKey(TUser record);
 
 	TUser findByLoginName(String currentLoginName);
-	
+
 }

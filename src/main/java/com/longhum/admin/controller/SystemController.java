@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,9 +20,7 @@ import com.longhum.admin.domain.ResourceMenu;
 @RequestMapping("/system")
 
 public class SystemController {
-	@RequiresRoles("admin")
 	// @RequiresPermissions("sys:list")//权限管理;
-	@RequestMapping("/first_menu_list")
 	@ResponseBody
     public List<ResourceMenu> firstmMenulist(HttpServletRequest request){
 		List<ResourceMenu> list = new ArrayList<ResourceMenu>();
@@ -39,6 +37,7 @@ public class SystemController {
     }
 	@RequestMapping("/menu_list")
 	@ResponseBody
+	@RequiresPermissions("sys:manager")//权限管理;
 	public List<ResourceMenu> menulist(HttpServletRequest request){
 		String ctx = request.getContextPath();
 		List<ResourceMenu> list = new ArrayList<ResourceMenu>();
