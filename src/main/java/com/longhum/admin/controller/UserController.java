@@ -5,14 +5,10 @@ import javax.validation.Valid;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
-import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
-import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.longhum.admin.model.TUser;
-import com.longhum.admin.service.UUserService;
-import com.longhum.admin.service.UserService;
 
 /**
  * @author liaoxiaohu
@@ -32,17 +26,11 @@ import com.longhum.admin.service.UserService;
 @RequestMapping("/user")
 public class UserController {
 
-	/*
-	 * @Autowired private UserService userService;
-	 * 
-	 * @Autowired private UUserService uuserService;
-	 */
-
 	@GetMapping("/login")
 	public String loginForm() {
 		return "usercenter/login";
 	}
-
+	
 	@PostMapping("/login")
 	public String login(@Valid TUser user, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		if (bindingResult.hasErrors()) {
@@ -63,7 +51,6 @@ public class UserController {
 			redirectAttributes.addFlashAttribute("msg", "用户名或密码错误次数过多");
 		} catch (AuthenticationException ae) {
 			// 通过处理Shiro的运行时AuthenticationException就可以控制用户登录失败或密码错误时的情景
-			ae.printStackTrace();
 			redirectAttributes.addFlashAttribute("msg", "用户名或密码不正确");
 		}
 		return "redirect:/user/login";

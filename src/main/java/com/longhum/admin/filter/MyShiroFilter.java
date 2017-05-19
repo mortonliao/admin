@@ -1,8 +1,9 @@
-package com.longhum.admin.config;
+package com.longhum.admin.filter;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -16,7 +17,7 @@ import org.springframework.context.annotation.DependsOn;
 import com.longhum.admin.shiro.UserRealm;
 
 @Configuration
-public class ShiroConfig {
+public class MyShiroFilter {
 
 	@Bean(name = "shiroFilter")
 	public ShiroFilterFactoryBean  shiroFilterFacrory(SecurityManager securityManager){
@@ -24,7 +25,7 @@ public class ShiroConfig {
 		
 		shiroFilterFactoryBean.setSecurityManager(securityManager);
 		shiroFilterFactoryBean.setLoginUrl("/user/login");
-		shiroFilterFactoryBean.setSuccessUrl("/index");
+		//shiroFilterFactoryBean.setSuccessUrl("/index");
 		shiroFilterFactoryBean.setUnauthorizedUrl("/403");
 		
 		/*定义shiro过滤链 Map结构 * Map中key(xml中是指value值)的第一个'/'代表的路径是相对于HttpServletRequest.getContextPath()的值来的 * anon：
@@ -37,7 +38,7 @@ public class ShiroConfig {
 
         // <!-- 过滤链定义，从上向下顺序执行，一般将 /**放在最为下边 -->:这是一个坑呢，一不小心代码就不好使了;
         // <!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
-        filterChainDefinitionMap.put("/login", "anon");//anon 可以理解为不拦截
+        //filterChainDefinitionMap.put("/login", "anon");//anon 可以理解为不拦截
         filterChainDefinitionMap.put("/css/**", "anon");
         filterChainDefinitionMap.put("/font/**", "anon");
         filterChainDefinitionMap.put("/images/**", "anon");
@@ -52,6 +53,16 @@ public class ShiroConfig {
 		return shiroFilterFactoryBean;
 	}
 	
+	@Bean  
+    public HashedCredentialsMatcher hashedCredentialsMatcher(){  
+        HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();  
+          
+        hashedCredentialsMatcher.setHashAlgorithmName("md5");//散列算法:这里使用MD5算法;  
+        hashedCredentialsMatcher.setHashIterations(2);//散列的次数，比如散列两次，相当于 md5(md5(""));  
+          
+        return hashedCredentialsMatcher;  
+    }  
+	
 	@Bean
     public SecurityManager securityManager(UserRealm userRealm) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
@@ -61,6 +72,13 @@ public class ShiroConfig {
         return securityManager;
     }
 
+	@Bean  
+    public UserRealm userRealm(){  
+		UserRealm userRealm = new UserRealm();//这里实例化一个我们自己写的MyShiroRealm类  
+		userRealm.setCredentialsMatcher(hashedCredentialsMatcher());;  
+        return userRealm;  
+    }  
+	
 	/**
      * Shiro生命周期处理器 * @return
      */

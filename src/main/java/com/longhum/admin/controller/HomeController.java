@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -17,9 +18,14 @@ import com.longhum.admin.domain.ResourceMenu;
  */
 @Controller
 public class HomeController {
+	
+	/*@GetMapping("/login")
+	public String loginForm() {
+		return "usercenter/login";
+	}*/
+	
 	@RequestMapping("/")
     public ModelAndView login(ModelMap map){
-		
 		List<ResourceMenu> list = new ArrayList<ResourceMenu>(); ResourceMenu
 		menu1 = new ResourceMenu(1, 0, "会员管理"); ResourceMenu menu2 = new
 		ResourceMenu(2, 0, "系统管理"); ResourceMenu menu3 = new ResourceMenu(3,

@@ -51,7 +51,7 @@ function changeMainMenu(mainMenu){
 		</div>
 		<div style="float: right;line-height: 50px;margin-right: 10px;">
 			<shiro:user>  
-				<shiro:principal/> &nbsp;<a href="/user/logout">退出</a>
+				<shiro:principal/> &nbsp;<a href="${ctx}/user/logout">退出</a>
 			</shiro:user> 
 			  
 		</div>

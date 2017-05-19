@@ -50,7 +50,7 @@ public class TUser {
     }
 
     public String getSalt() {
-        return salt;
+        return username+salt;
     }
 
     public void setSalt(String salt) {
@@ -80,4 +80,11 @@ public class TUser {
     public void setStatus(Byte status) {
         this.status = status;
     }
+
+	@Override
+	public String toString() {
+		return "TUser [id=" + id + ", name=" + name + ", username=" + username + ", password=" + password + ", salt="
+				+ salt + ", email=" + email + ", phone=" + phone + ", status=" + status + "]";
+	}
+    
 }
