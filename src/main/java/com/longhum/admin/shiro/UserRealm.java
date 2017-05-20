@@ -6,14 +6,14 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.longhum.admin.model.TUser;
-import com.longhum.admin.service.UserService;
+import com.longhum.admin.model.SysUser;
+import com.longhum.admin.service.SysService;
 
 @Component
 public class UserRealm extends AbstractUserRealm {
 
 	@Autowired
-	private UserService userService;
+	private SysService sysService;
 //    @Override
 //    public UserRolesAndPermissions doGetGroupAuthorizationInfo(TUser user) {
 //        Set<String> userRoles = new HashSet<String>();
@@ -25,13 +25,13 @@ public class UserRealm extends AbstractUserRealm {
 //    }
 
     @Override
-    public UserRolesAndPermissions doGetRoleAuthorizationInfo(TUser user) {
+    public UserRolesAndPermissions doGetRoleAuthorizationInfo(SysUser user) {
         Set<String> userRoles = new HashSet<String>();
-        Set<String> userPermissions = new HashSet<String>();
+        Set<String> userResources = new HashSet<String>();
         //获取当前用户下拥有的所有角色列表,及权限
-        userRoles = userService.getRolesByUserId(user.getId());
-        userPermissions =  userService.getPermissionsByUserId(user.getId());
-        return new UserRolesAndPermissions(userRoles, userPermissions);
+        userRoles = sysService.getRolesByUserId(user.getId());
+        userResources =  sysService.getResourceByUserId(user.getId());
+        return new UserRolesAndPermissions(userRoles, userResources);
     }
    
 }

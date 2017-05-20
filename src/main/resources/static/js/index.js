@@ -11,7 +11,7 @@ setting = {
 		simpleData : {
 			enable : true,
 			idKey : "id",
-			pIdKey : "pId",
+			pIdKey : "parentId",
 			rootPId : 0
 		}
 	},

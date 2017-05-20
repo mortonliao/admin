@@ -27,7 +27,7 @@ import com.alibaba.druid.pool.DruidDataSource;
 public class MasterDataSourceConfig {
 
     // 精确到 master 目录，以便跟其他数据源隔离
-    static final String PACKAGE = "com.longhum.admin.dao.admin";
+    static final String PACKAGE = "com.longhum.admin.dao";
     static final String MAPPER_LOCATION = "classpath:mapper/admin/*.xml";
 
     @Value("${master.datasource.url}")

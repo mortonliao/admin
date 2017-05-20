@@ -5,12 +5,12 @@ import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
 
-import com.longhum.admin.model.TUser;
+import com.longhum.admin.model.SysUser;
 
 public class ShiroUtil {
 	private static RandomNumberGenerator randomNumberGenerator = new SecureRandomNumberGenerator();
 	
-	public static void encryptUser(TUser user){
+	public static void encryptUser(SysUser user){
 		if(user == null){
 			return ;
 		}
@@ -23,9 +23,9 @@ public class ShiroUtil {
 	}
 	
 	public static void main(String[] args) {
-		TUser user = new TUser();
-		user.setUsername("guojing");
-		user.setPassword("111111");
+		SysUser user = new SysUser();
+		user.setUsername("admin");
+		user.setPassword("admin123");
 		encryptUser(user);
 		System.out.println(user);
 		//8fd187f3dbdc684f5f883a70e6252a2d

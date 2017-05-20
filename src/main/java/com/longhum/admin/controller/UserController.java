@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.longhum.admin.model.TUser;
+import com.longhum.admin.model.SysUser;
 
 /**
  * @author liaoxiaohu
@@ -32,7 +32,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/login")
-	public String login(@Valid TUser user, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+	public String login(@Valid SysUser user, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		if (bindingResult.hasErrors()) {
 			return "/user/login";
 		}
