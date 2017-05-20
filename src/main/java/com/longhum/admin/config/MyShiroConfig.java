@@ -1,10 +1,14 @@
 package com.longhum.admin.config;
 
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
+import org.crazycake.shiro.RedisCacheManager;
+import org.crazycake.shiro.RedisManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,10 +34,33 @@ public class MyShiroConfig {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(userRealm);
         //注入缓存管理器;
-       // securityManager.setCacheManager(ehCacheManager());//这个如果执行多次，也是同样的一个对象;
+       //securityManager.setCacheManager(cacheManager());//这个如果执行多次，也是同样的一个对象;
         return securityManager;
     }
-
+	
+	public RedisManager redisManager() {
+		RedisManager redisManager = new RedisManager();
+		redisManager.setHost("");
+		redisManager.setPort(3306);
+		redisManager.setExpire(1800);// 配置过期时间
+		// redisManager.setTimeout(timeout);
+		// redisManager.setPassword(password);
+		return redisManager;
+	}
+	
+	public RedisCacheManager cacheManager() {
+		RedisCacheManager redisCacheManager = new RedisCacheManager();
+		redisCacheManager.setRedisManager(redisManager());
+		return redisCacheManager;
+	}
+	/**
+	 * shiro session的管理
+	 */
+	public DefaultWebSessionManager SessionManager() {
+		DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
+		//sessionManager.setSessionDAO(redisSessionDAO());
+		return sessionManager;
+	}
 	@Bean  
     public UserRealm userRealm(){  
 		UserRealm userRealm = new UserRealm();//这里实例化一个我们自己写的MyShiroRealm类  

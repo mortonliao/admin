@@ -36,9 +36,12 @@ public class MyShiroFilter {
         filterChainDefinitionMap.put("/images/**", "anon");
         filterChainDefinitionMap.put("/js/**", "anon");
         filterChainDefinitionMap.put("/plug/**", "anon");
+        filterChainDefinitionMap.put("/system/menu_list", "perms[sys:menu:list]");
         
         filterChainDefinitionMap.put("/**", "authc");
-
+        //filterChainDefinitionMap.put("/system/menu_list", "roles[supadmin]");
+        
+        
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         
 		return shiroFilterFactoryBean;

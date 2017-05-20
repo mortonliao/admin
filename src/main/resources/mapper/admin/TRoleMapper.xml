@@ -25,15 +25,9 @@
 	    id IN (SELECT 
 	            role_id
 	        FROM
-	            t_user_group_role
+	            t_user_role
 	        WHERE
-	            user_group_id IN (SELECT 
-	                    user_group_id
-	                FROM
-	                    t_user_group_user
-	                WHERE
-	                    user_id = #{userId}
-				)
+	            user_id = #{userId}
 		   )
   </select>
   

@@ -1,5 +1,7 @@
 package com.longhum.admin.dao.admin;
 
+import java.util.List;
+
 import com.longhum.admin.model.TMenu;
 
 public interface TMenuMapper {
@@ -14,4 +16,6 @@ public interface TMenuMapper {
     int updateByPrimaryKeySelective(TMenu record);
 
     int updateByPrimaryKey(TMenu record);
+
+	List<TMenu> findByPid(Integer id);
 }
