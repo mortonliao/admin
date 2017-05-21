@@ -50,3 +50,4 @@ CREATE TABLE `sys_user` (
   UNIQUE KEY `idx_sys_user_username` (`username`),
   KEY `idx_sys_user_organization_id` (`group_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
