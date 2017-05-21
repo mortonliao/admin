@@ -21,11 +21,14 @@ function initMenu(mainMenu){
 	mainMenu.css({"background":"orange"});
 	$.get('${ctx}/system/menu_list',{id:id},function(data){
 		var zTreeObj = $.fn.zTree.init($("#tree"), setting, data);
-		
 	});
 }
-function changeMainMenu(mainMenu){
-	initMenu($(mainMenu));	
+function changeMainMenu(id,parentIds){
+	$("#mainMenu .info").css({"background":"#b3acac"});
+	$("#btn-medium"+id).css({"background":"orange"});
+	$.get('${ctx}/system/menu_list',{id:id,parentIds:parentIds},function(data){
+		var zTreeObj = $.fn.zTree.init($("#tree"), setting, data);
+	});
 }
 </script>
 </head>
@@ -42,7 +45,7 @@ function changeMainMenu(mainMenu){
 		<div class="container" style="float: left;width:70%;hright:50px;">
 				<div id="mainMenu" class="row">
 					<c:forEach items="${menuList}" var="menu" varStatus="s">
-						<span class="btn btn-medium info ${menu.id}" onclick="changeMainMenu(this)">
+						<span class="btn btn-medium info ${menu.id}" id="btn-medium${menu.id}"  onclick="changeMainMenu(${menu.id},'${menu.parentIds}')">
 							${menu.name}
 						</span>
 						<!-- <div class="btn btn-medium separator"> </div> -->

@@ -9,13 +9,14 @@
     <result column="parent_id" property="parentId" jdbcType="BIGINT" />
     <result column="parent_ids" property="parentIds" jdbcType="VARCHAR" />
     <result column="permission" property="permission" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="BIT" />
     <result column="status" property="status" jdbcType="BIT" />
     <result column="icon" property="icon" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, type, path, parent_id, parent_ids, permission, status, icon
+    id, name, type, path, parent_id, parent_ids, permission,sort, status, icon
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from sys_resource
@@ -25,6 +26,7 @@
     select 
     <include refid="Base_Column_List" />
     from sys_resource
+    order by sort
   </select>
               
   <select id="findFirstByParentIdAndUserId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
@@ -42,6 +44,7 @@
 	    <if test="parentId != null" >
 	        and parent_id = #{parentId}
 	    </if>
+	    order by sort
   </select>
   <select id="findByParentIdAndUserId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -56,15 +59,22 @@
 	    	)
 	    )
 	    <if test="parentId != null" >
-	        and parent_ids like '%${parentId}%'
+	        and parent_id = ${parentId}
 	    </if>
+	    <if test="parentIds != null" >
+	        and parent_ids like '%${parentIds}%'
+	    </if>
+	    <if test="type != null" >
+	        and type=#{type}
+	    </if>
+	    order by sort
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from sys_resource
     where id = #{id,jdbcType=BIGINT}
   </delete>
   
-  <insert id="insertSelective" parameterType="com.longhum.admin.model.SysResource" >
+  <insert id="save" parameterType="com.longhum.admin.model.SysResource" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
     insert into sys_resource
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -87,6 +97,9 @@
       </if>
       <if test="permission != null" >
         permission,
+      </if>
+      <if test="sort != null" >
+        sort,
       </if>
       <if test="status != null" >
         status,
@@ -117,6 +130,9 @@
       <if test="permission != null" >
         #{permission,jdbcType=VARCHAR},
       </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=BIT},
+      </if>
       <if test="status != null" >
         #{status,jdbcType=BIT},
       </if>
@@ -125,7 +141,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.longhum.admin.model.SysResource" >
+  <update id="update" parameterType="com.longhum.admin.model.SysResource" >
     update sys_resource
     <set >
       <if test="name != null" >
@@ -145,6 +161,9 @@
       </if>
       <if test="permission != null" >
         permission = #{permission,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=BIT},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=BIT},

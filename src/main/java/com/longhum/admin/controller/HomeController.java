@@ -29,7 +29,7 @@ public class HomeController {
 	@RequestMapping("/")
     public ModelAndView login(ModelMap map,HttpServletRequest request){
 		Subject subject = SecurityUtils.getSubject();
-		List<SysResource> list = sysService.findFirstByParentIdAndUserName(0,(String)subject.getPrincipal());
+		List<SysResource> list = sysService.findFirstByParentIdAndUserName(1,(String)subject.getPrincipal());
 		map.put("menuList", list);
 		
         return new ModelAndView("index");

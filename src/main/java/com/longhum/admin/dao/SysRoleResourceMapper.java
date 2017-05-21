@@ -1,5 +1,8 @@
 package com.longhum.admin.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.longhum.admin.model.SysRoleResource;
 
 public interface SysRoleResourceMapper {
@@ -14,4 +17,8 @@ public interface SysRoleResourceMapper {
     int updateByPrimaryKeySelective(SysRoleResource record);
 
     int updateByPrimaryKey(SysRoleResource record);
+
+	void saveList(List<SysRoleResource> list);
+
+	void deleteSysRoleResourceList(Map<String, Object> map);
 }

@@ -19,6 +19,22 @@
     delete from sys_role_resource
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteSysRoleResourceList" >
+    delete from sys_role_resource
+    where role_id = #{roleId} 
+    	and resource_id in
+    	<foreach collection="list" item="item" open="(" close=")" separator="," >
+    		${item}
+    	</foreach>
+  </delete>
+  
+  <insert id="saveList" parameterType="com.longhum.admin.model.SysRoleResource" >
+    insert into sys_role_resource (id, role_id, resource_id)
+    values 
+   	<foreach collection="list" item="item" separator=",">
+   		(#{item.id,jdbcType=INTEGER}, #{item.roleId,jdbcType=INTEGER}, #{item.resourceId,jdbcType=INTEGER})
+   	</foreach>
+  </insert>
   <insert id="insert" parameterType="com.longhum.admin.model.SysRoleResource" >
     insert into sys_role_resource (id, role_id, resource_id
       )

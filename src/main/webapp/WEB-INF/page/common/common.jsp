@@ -10,6 +10,7 @@
 
 <!-- easyui --> 
 <link rel="stylesheet" type="text/css" href="${ctx}/plug/jquery-easyui-1/themes/default/easyui.css">
+<%-- <link rel="stylesheet" type="text/css" href="${ctx}/plug/jquery-easyui-1/demo/demo.css"> --%>
 <link rel="stylesheet" type="text/css" href="${ctx}/plug/jquery-easyui-1/themes/icon.css">
        
 <script type="text/javascript" src="${ctx}/plug/jquery-easyui-1/jquery.min.js"></script>

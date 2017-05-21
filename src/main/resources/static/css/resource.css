@@ -1,0 +1,16 @@
+@CHARSET "UTF-8";
+.layout{
+	float: left;
+}
+.layout.left{
+	height:100%;
+	border-right: 1px dotted;
+}
+
+.ztree li span {
+	font-size: 13px;
+	font-family: serif;
+}
+input{
+	width:250px;
+}
