@@ -35,9 +35,9 @@ public class SystemController {
 	@Autowired
 	private SysUserRoleService userRoleService;
 	
-	@RequestMapping("/menu_list")
+	@RequestMapping("/menuList")
 	@ResponseBody
-	public List<SysResource> menulist(HttpServletRequest request,Integer id,String preantIds){
+	public List<SysResource> menuList(HttpServletRequest request,Integer id,String preantIds){
 		List<SysResource> list = sysService.findByParentIdAndUserName(id, preantIds, (String)SecurityUtils.getSubject().getPrincipal(),"menu");
 		return list;
 	}
@@ -49,9 +49,16 @@ public class SystemController {
 		return "system/permission";
 	}
 	
-	@RequestMapping("/rolelist")
+	@RequestMapping("/role")
+	public String role(HttpServletRequest request,ModelMap map){
+		List<SysRole> list = userRoleService.findAllRole();
+		map.put("list", list);
+		return "system/role";
+	}
+	
+	@RequestMapping("/roleList")
 	@ResponseBody
-	public List<SysRole> rolelist(HttpServletRequest request,Integer id){
+	public List<SysRole> roleList(HttpServletRequest request,Integer id){
 		List<SysRole> list = userRoleService.findAllRole();
 		return list;
 	}

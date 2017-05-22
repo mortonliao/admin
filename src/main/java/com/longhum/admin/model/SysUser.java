@@ -70,4 +70,12 @@ public class SysUser {
     public void setStatus(Boolean status) {
         this.status = status;
     }
+
+	@Override
+	public String toString() {
+		return "SysUser [id=" + id + ", groupId=" + groupId + ", username=" + username + ", password=" + password
+				+ ", salt=" + salt + ", locked=" + locked + ", status=" + status + "]";
+	}
+    
+    
 }

@@ -25,7 +25,7 @@ public class ShiroUtil {
 	public static void main(String[] args) {
 		SysUser user = new SysUser();
 		user.setUsername("admin");
-		user.setPassword("admin123");
+		user.setPassword("1234qwer");
 		encryptUser(user);
 		System.out.println(user);
 		//8fd187f3dbdc684f5f883a70e6252a2d

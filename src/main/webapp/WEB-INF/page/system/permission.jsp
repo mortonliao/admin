@@ -10,7 +10,7 @@
 <script src="${ctx}/js/permission.js"></script>
 <script type="text/javascript" >
 $(document).ready(function() {
-	$.get('${ctx}/resource/allresource2',function(data){
+	$.get('${ctx}/resource/allResource2',function(data){
 		var zTreeObj = $.fn.zTree.init($("#tree"), setting, data);
 	});
 });

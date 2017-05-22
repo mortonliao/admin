@@ -31,28 +31,18 @@ function nodeClick(e,treeId, treeNode) {
 	$("#iconimg").attr('src',treeNode.icon);
 	$("#node-detail .context .icon").attr("src",treeNode.icon);
 	
-	if(treeNode.type != 'menu' && treeNode.type != 'root'){
-		$("#createLowerBut").hide();
-	}else{
+	if(treeNode.type == 'menu'){
 		$("#createLowerBut").show();
-	}
-	
-	if(treeNode.type == 'root'){
-		$("#type").combobox('readonly',true);
-		$("#icon").filebox({disabled: true});
 	}else{
-		$("#type").combobox('readonly',false);
-		$("#icon").filebox({disabled: false});
+		$("#createLowerBut").hide();
 	}
-	
 	
 	$("#name").textbox('readonly',true);
 	$("#path").textbox('readonly',true);
 	$("#permission").textbox('readonly',true);
 	$("#sort").textbox('readonly',true);
-	
+	$("#type").combobox('readonly',true);
 	$("#icon").filebox({disabled: true});
-	
 	$("#createLowerBut").linkbutton({disabled: false});
 	$("#node-detail").show();
 }
@@ -63,7 +53,19 @@ function setFontCss(treeId, treeNode) {
 function showIconForTree(treeId, treeNode) {
 	return treeNode.level != 1;
 };
+
+var resourceId,resourceIds,name,path,permission,sort,type;
+
 function editResource(){
+	
+	resourceId = $("#resourceId").val();
+	resourceIds = $("#resourceIds").val();
+	name = $("#name").textbox('getValue');
+	path = $("#path").textbox('getValue');
+	permission = $("#permission").textbox('getValue');
+	sort = $("#sort").textbox('getValue');
+	type = $("#type").combobox('getValue');
+	
 	$("#name").textbox('readonly',false);
 	$("#path").textbox('readonly',false);
 	$("#permission").textbox('readonly',false);
@@ -72,15 +74,28 @@ function editResource(){
 	$("#type").combobox('readonly',false);
 	$("#icon").filebox({disabled: false});
 	
-//	if(treeNode.type == 'root'){
-//		$("#type").combobox('readonly',true);
-//		$("#icon").filebox({disabled: true});
-//	}else{
-//		$("#type").combobox('readonly',false);
-//		$("#icon").filebox({disabled: false});
-//	}
+}
+
+function cancelEditResource(){
+	
+	$("#resourceId").val(resourceId);
+	$("#resourceIds").val(resourceIds);
+	$("#name").textbox('setValue',name);
+	$("#path").textbox('setValue',path);
+	$("#permission").textbox('setValue',permission);
+	$("#sort").textbox('setValue',sort);
+	$("#type").combobox('setValue',type);
+	
+	$("#name").textbox('readonly',true);
+	$("#path").textbox('readonly',true);
+	$("#permission").textbox('readonly',true);
+	$("#sort").textbox('readonly',true);
+	$("#createLowerBut").linkbutton({disabled: false});
+	$("#type").combobox('readonly',true);
+	$("#icon").filebox({disabled: true});
 	
 }
+
 function subForm(formId){
 	var form = $("#"+formId);
 	$.ajax({
@@ -89,35 +104,36 @@ function subForm(formId){
 		url:form.attr("action"),
 		data:form.serializeArray(),
 		success:function(data){
-			
-			if($("#add")){
+			console.log(data);
+			if(formId == 'resourceFormAdd'){
 				$("#add").dialog('close');
 			}
 			$.messager.show({
 				title:'提示',
-				msg:data,
+				msg:data.msg,
 				showType:'fade',
-				timeout:3,
+				timeout:4,
 				style:{
 					right:'',
 					bottom:''
 				}
 			});
-			$.get('allresource',function(treeData){
+			$("#createLowerBut").linkbutton({disabled: false});
+			$.get('allResource',function(treeData){
+				console.log(treeData);
 				var zTreeObj = $.fn.zTree.init($("#tree"), setting, treeData);
+				var treeObj = $.fn.zTree.getZTreeObj("tree");
+				console.log(treeObj.getNodes());
+				var nodes =  treeObj.getNodeByParam("id", data.data.id, null);
+				
+				console.log(nodes);
+				if (nodes.length>0) {  
+					treeObj.selectNode(nodes[0]);  
+			    }  
 			});
 		},
 		error:function(data){
-			$.messager.show({
-				title:'提示',
-				msg:data,
-				timeout:3,
-				showType:'fade',
-				style:{
-					right:'',
-					bottom:''
-				}
-			});
+			$.messager.alert('提示',data,'error');
 		}
 	});
 }
@@ -128,7 +144,7 @@ function add(){
 	$('#add').dialog({
 	    title: '创建下级',
 	    width: 400,
-	    height: 300,
+	    height: 350,
 	    closed: false,
 	    cache: false,
 	    //href: 'get_content.php',

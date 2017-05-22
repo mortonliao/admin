@@ -110,7 +110,7 @@ function queryPermissionByRoleId(roleId){
 				});
 			}
 		},{
-			text:'关闭',
+			text:'取消',
 			iconCls:'icon-no',
 			handler:function(){
 				$("#permissionList").dialog('close');

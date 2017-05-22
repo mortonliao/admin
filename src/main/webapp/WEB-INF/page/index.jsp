@@ -18,15 +18,15 @@ function initMenu(mainMenu){
 	var id = ids[ids.length-1];
 	
 	$("#mainMenu .info").css({"background":"#b3acac"});
-	mainMenu.css({"background":"orange"});
-	$.get('${ctx}/system/menu_list',{id:id},function(data){
+	mainMenu.css({"background":"#9bbbbb	"});
+	$.get('${ctx}/system/menuList',{id:id},function(data){
 		var zTreeObj = $.fn.zTree.init($("#tree"), setting, data);
 	});
 }
 function changeMainMenu(id,parentIds){
 	$("#mainMenu .info").css({"background":"#b3acac"});
-	$("#btn-medium"+id).css({"background":"orange"});
-	$.get('${ctx}/system/menu_list',{id:id,parentIds:parentIds},function(data){
+	$("#btn-medium"+id).css({"background":"#9bbbbb"});
+	$.get('${ctx}/system/menuList',{id:id,parentIds:parentIds},function(data){
 		var zTreeObj = $.fn.zTree.init($("#tree"), setting, data);
 	});
 }

@@ -10,7 +10,7 @@
 <script src="${ctx}/js/resource.js"></script>
 <script type="text/javascript" >
 $(document).ready(function() {
-	$.get('${ctx}/resource/allresource',function(data){
+	$.get('${ctx}/resource/allResource',function(data){
 		var zTreeObj = $.fn.zTree.init($("#tree"), setting, data);
 	});
 	
@@ -76,6 +76,7 @@ $(document).ready(function() {
 		    <div>
 		    	<shiro:hasPermission name="resource:edit">
 					<a onclick="editResource()" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit'">编辑</a>
+					<a onclick="cancelEditResource()" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-no'">取消</a>
 					<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="subForm('resourceForm')" >保存</a>
 				</shiro:hasPermission>
 				<shiro:hasPermission name="resource:create">

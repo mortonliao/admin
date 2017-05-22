@@ -13,6 +13,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.longhum.admin.entity.ResultSimpleDate;
 import com.longhum.admin.entity.TreeResource;
 import com.longhum.admin.model.SysResource;
 import com.longhum.admin.service.SysService;
@@ -29,16 +30,16 @@ public class ResourceController {
 	private SysService sysService;
 	
 	@RequestMapping("/manager")
-	public String menulist(HttpServletRequest request,ModelMap map){
+	public String menuList(HttpServletRequest request,ModelMap map){
 		return "/system/resource";
 	}
-	@RequestMapping("/allresource")
+	@RequestMapping("/allResource")
 	@ResponseBody
-	public List<SysResource> allresource(HttpServletRequest request){
+	public List<SysResource> allResource(HttpServletRequest request){
 		List<SysResource> list = sysService.findAllMenu();
 		return list;
 	}
-	@RequestMapping("/allresource2")
+	@RequestMapping("/allResource2")
 	@ResponseBody
 	public List<TreeResource> allresource2(HttpServletRequest request){
 		List<SysResource> list = sysService.findAllMenu();
@@ -58,9 +59,9 @@ public class ResourceController {
 	
 	@RequestMapping("/save")
 	@ResponseBody
-	public String save(HttpServletRequest request,SysResource resource){
-		System.out.println(resource);
+	public ResultSimpleDate save(HttpServletRequest request,SysResource resource){
+		//int x = 1/0;
 		resource = sysService.saveResource(resource);
-		return "操作成功";
+		return ResultSimpleDate.ok("操作成功", resource);
 	}
 }
