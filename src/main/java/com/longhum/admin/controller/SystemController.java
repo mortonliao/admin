@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.longhum.admin.entity.ResultSimpleDate;
 import com.longhum.admin.entity.TreeResource;
 import com.longhum.admin.model.SysResource;
 import com.longhum.admin.model.SysRole;
@@ -62,6 +63,13 @@ public class SystemController {
 		List<SysRole> list = userRoleService.findAllRole();
 		return list;
 	}
+	
+	@RequestMapping("/saveRole")
+	@ResponseBody
+	public ResultSimpleDate saveRole(HttpServletRequest request,Integer id){
+		return ResultSimpleDate.ok("新建账户成功");
+	}
+	
 	@RequestMapping("/saveRolePermission")
 	@ResponseBody
 	public String saveRolePermission(HttpServletRequest request,@RequestParam("roleId") Integer roleId ,

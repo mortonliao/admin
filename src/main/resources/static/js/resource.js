@@ -104,7 +104,6 @@ function subForm(formId){
 		url:form.attr("action"),
 		data:form.serializeArray(),
 		success:function(data){
-			console.log(data);
 			if(formId == 'resourceFormAdd'){
 				$("#add").dialog('close');
 			}
@@ -120,16 +119,9 @@ function subForm(formId){
 			});
 			$("#createLowerBut").linkbutton({disabled: false});
 			$.get('allResource',function(treeData){
-				console.log(treeData);
-				var zTreeObj = $.fn.zTree.init($("#tree"), setting, treeData);
-				var treeObj = $.fn.zTree.getZTreeObj("tree");
-				console.log(treeObj.getNodes());
-				var nodes =  treeObj.getNodeByParam("id", data.data.id, null);
-				
-				console.log(nodes);
-				if (nodes.length>0) {  
-					treeObj.selectNode(nodes[0]);  
-			    }  
+				var treeObj = $.fn.zTree.init($("#tree"), setting, treeData);
+				var nodes =  treeObj.getNodeByParam("id", data.data.id);
+				treeObj.selectNode(nodes);
 			});
 		},
 		error:function(data){
