@@ -16,8 +16,10 @@ public interface SysResourceMapper {
 
 	List<SysResource> findAllMenu();
 
-	List<SysResource> findFirstByParentIdAndUserId(Map<String, Object> map);
+	List<SysResource> findByRoleIdOrParentIdOrPreateIdsOrType(Map<String, Object> map);
 
 	void update(SysResource resource);
+
+	List<SysResource> findByRoleId(Long roleId);
 
 }

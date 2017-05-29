@@ -15,18 +15,19 @@ $(document).ready(function() {
 });
 function initMenu(mainMenu){
 	var ids  = mainMenu.attr("class").split(" ");
+	
 	var id = ids[ids.length-1];
 	
 	$("#mainMenu .info").css({"background":"#b3acac"});
 	mainMenu.css({"background":"#9bbbbb	"});
-	$.get('${ctx}/system/menuList',{id:id},function(data){
+	$.get('${ctx}/system/menuList.do',{id:id},function(data){
 		var zTreeObj = $.fn.zTree.init($("#tree"), setting, data);
 	});
 }
 function changeMainMenu(id,parentIds){
 	$("#mainMenu .info").css({"background":"#b3acac"});
 	$("#btn-medium"+id).css({"background":"#9bbbbb"});
-	$.get('${ctx}/system/menuList',{id:id,parentIds:parentIds},function(data){
+	$.get('${ctx}/system/menuList.do',{id:id,parentIds:parentIds},function(data){
 		var zTreeObj = $.fn.zTree.init($("#tree"), setting, data);
 	});
 }
@@ -54,7 +55,7 @@ function changeMainMenu(id,parentIds){
 		</div>
 		<div style="float: right;line-height: 50px;margin-right: 10px;">
 			<shiro:user>  
-				<shiro:principal/> &nbsp;<a href="${ctx}/user/logout">退出</a>
+				<shiro:principal/> &nbsp;<a href="${ctx}/user/logout.do">退出</a>
 			</shiro:user> 
 			  
 		</div>
@@ -73,6 +74,7 @@ function changeMainMenu(id,parentIds){
 			<a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-no'" onclick="removeTabs()">
 			</a>
 		</div>
+		
 	</div>
 </body>
 </html>

@@ -27,9 +27,9 @@ public class HomeController {
 	private SysService sysService;
 	
 	@RequestMapping("/")
-    public ModelAndView login(ModelMap map,HttpServletRequest request){
+    public ModelAndView index(ModelMap map,HttpServletRequest request){
 		Subject subject = SecurityUtils.getSubject();
-		List<SysResource> list = sysService.findFirstByParentIdAndUserName(1,(String)subject.getPrincipal());
+		List<SysResource> list = sysService.findByUserNameOrParentIdOrPreateIdsOrType(1,null,(String)subject.getPrincipal(),"menu");
 		map.put("menuList", list);
 		
         return new ModelAndView("index");

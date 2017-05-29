@@ -1,3 +1,4 @@
+
 setting = {
 		view : {
 			showLine : true,
@@ -55,6 +56,9 @@ function setFontCss(treeId, treeNode) {
 };
 
 function queryPermissionByRoleId(roleId){
+	$.get(getRootPath()+'/resource/allResource3.do',{'roleId':roleId},function(data){
+		var zTreeObj = $.fn.zTree.init($("#tree"), setting, data);
+	});
 	$('#permissionList').dialog({
 	    title: '权限管理',
 	    width: 400,
@@ -80,7 +84,7 @@ function queryPermissionByRoleId(roleId){
 				$.ajax({
 					type:'post',
 					async:false,
-					url:'saveRolePermission',
+					url:getRootPath()+'/resource/saveRolePermission2',
 					data:{'roleId':roleId,'addList':addList,'removeList':removeList},
 					success:function(data){
 						$("#permissionList").dialog('close');
@@ -118,3 +122,9 @@ function queryPermissionByRoleId(roleId){
 		}]
 	});
 }
+
+function getRootPath() {  
+    var pathName = window.location.pathname.substring(1);  
+    var webName = pathName == '' ? '' : pathName.substring(0, pathName.indexOf('/'));  
+    return window.location.protocol + '//' + window.location.host + '/' + webName + '/';  
+}  

@@ -10,7 +10,7 @@
 <script src="${ctx}/js/resource.js"></script>
 <script type="text/javascript" >
 $(document).ready(function() {
-	$.get('${ctx}/resource/allResource',function(data){
+	$.get('${ctx}/resource/allResource.do',function(data){
 		var zTreeObj = $.fn.zTree.init($("#tree"), setting, data);
 	});
 	
@@ -26,7 +26,7 @@ $(document).ready(function() {
 	<div id="node-detail" hidden="hidden" class="layout center" style="margin-left: 20px;">
 		<div class="easyui-panel" title="详细信息" style="width:400px;padding: 10px;text-align: center;">
 			<div style="text-align:center;padding:5px;">
-				<form id="resourceForm" name="resourceForm" method="post" action="${ctx}/resource/save">
+				<form id="resourceForm" name="resourceForm" method="post" action="${ctx}/resource/save.do" enctype="multipart/form-data">
 			    	<table cellpadding="5">
 			    		<tr>
 			    			<td>名称:</td>
@@ -66,8 +66,8 @@ $(document).ready(function() {
 			    		<tr>
 			    			<td>图标:</td>
 			    			<td>
-			    				<input disabled="disabled" id="icon" class="easyui-filebox" name="icon" data-options="buttonText:'选择',prompt:''" >
-								<img style="float:right; margin-top: 5px;margin-left: 5px;" id="iconimg" class="icon" alt="" src="" />
+			    				<input disabled="disabled" id="iconFile" class="easyui-filebox" name="iconFile" data-options="buttonText:'选择',prompt:''" >
+								<!-- <img style="float:right; margin-top: 5px;margin-left: 5px;" id="iconimg" class="icon" alt="" src="" /> -->
 			    			</td>
 			    		</tr>
 			    	</table>
@@ -88,7 +88,7 @@ $(document).ready(function() {
 	
 	<div hidden="hidden" id="add"  style="text-align:center;padding:20px;">
 		<div>
-				<form id="resourceFormAdd" name="resourceFormAdd" method="post" action="${ctx}/resource/save">
+				<form id="resourceFormAdd" name="resourceFormAdd" method="post" action="${ctx}/resource/save.do">
 			    	<table cellpadding="5">
 			    		<tr>
 			    			<td>名称:</td>

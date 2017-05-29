@@ -14,6 +14,7 @@ import com.longhum.admin.dao.SysRoleMapper;
 import com.longhum.admin.dao.SysRoleResourceMapper;
 import com.longhum.admin.dao.SysUserMapper;
 import com.longhum.admin.model.SysResource;
+import com.longhum.admin.model.SysRole;
 import com.longhum.admin.model.SysRoleResource;
 import com.longhum.admin.service.SysService;;
 @Service
@@ -29,15 +30,16 @@ public class SysServiceImpl implements SysService{
 	private SysRoleMapper roleDao;
 	
 	@Override
-	public List<SysResource> findByParentIdAndUserName(Integer parentId,String parentIds,String username,String type) {
+	public List<SysResource> findByUserNameOrParentIdOrPreateIdsOrType(Integer parentId,String parentIds,String username,String type) {
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("type", type);
 		map.put("parentId", parentId);
-		if(parentId != null && parentIds != null){
-			map.put("parentIds", parentIds+parentId+"/");
-		}
-		map.put("userId", userDao.findByUsername(username).getId());
-		return resourceDao.findByParentIdAndUserId(map);
+		map.put("parentIds", parentIds);
+		map.put("type", type);
+		map.put("roleId", userDao.findByUsername(username).getRoleId());
+//		if(parentId != null && parentIds != null){
+//			map.put("parentIds", parentIds+parentId+"/");
+//		}
+		return resourceDao.findByRoleIdOrParentIdOrPreateIdsOrType(map);
 	}
 
 	@Override
@@ -48,8 +50,9 @@ public class SysServiceImpl implements SysService{
 	@Override
 	public Set<String> getPermissionsByUserId(Long userId) {
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("userId", userId);
-		List<SysResource> list = resourceDao.findByParentIdAndUserId(map);
+		map.put("roleId", userDao.findById(userId).getRoleId());
+		//List<SysResource> list = resourceDao.findByParentIdAndUserId(map);
+		List<SysResource> list = resourceDao.findByRoleIdOrParentIdOrPreateIdsOrType(map);
 		Set<String> result = new HashSet<String>();
 		for (SysResource r : list) {
 			if(r.getPermission() != null && r.getPermission().trim().length() > 0){
@@ -64,13 +67,13 @@ public class SysServiceImpl implements SysService{
 		return resourceDao.findAllMenu();
 	}
 
-	@Override
-	public List<SysResource> findFirstByParentIdAndUserName(int parentId, String username) {
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("parentId", parentId);
-		map.put("userId", userDao.findByUsername(username).getId());
-		return resourceDao.findFirstByParentIdAndUserId(map);
-	}
+//	@Override
+//	public List<SysResource> findFirstByParentIdAndUserName(int parentId, String username) {
+//		Map<String,Object> map = new HashMap<String,Object>();
+//		map.put("parentId", parentId);
+//		map.put("userId", userDao.findByUsername(username).getId());
+//		return resourceDao.findByRoleIdAndParentIdOrPreateIdsOrType(map);
+//	}
 
 	@Override
 	public SysResource saveResource(SysResource resource) {
@@ -94,7 +97,7 @@ public class SysServiceImpl implements SysService{
 	}
 
 	@Override
-	public void deleteSysRoleResourceList(Integer roleId, List<Integer> list) {
+	public void deleteSysRoleResourceList(Long roleId, List<Long> list) {
 		if(roleId == null || list == null || list.size() == 0){
 			return;
 		}
@@ -102,6 +105,25 @@ public class SysServiceImpl implements SysService{
 		map.put("roleId", roleId);
 		map.put("list", list);
 		roleResourceDao.deleteSysRoleResourceList(map);
+	}
+
+	@Override
+	public void saveSysRole(SysRole role) {
+		if(role.getId() != null){
+			roleDao.update(role);
+		}else{
+			roleDao.save(role);
+		}
+	}
+
+	@Override
+	public SysRole findRoleById(Long roleId) {
+		return roleDao.findById(roleId);
+	}
+
+	@Override
+	public List<SysResource> findByRoleId(Long roleId) {
+		return resourceDao.findByRoleId(roleId);
 	}
 
 }

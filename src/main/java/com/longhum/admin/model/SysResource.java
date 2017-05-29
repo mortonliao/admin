@@ -1,5 +1,7 @@
 package com.longhum.admin.model;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class SysResource {
     private Long id;
 
@@ -20,8 +22,18 @@ public class SysResource {
     private String icon;
 
     private Integer sort;
-    
-    public Integer getSort() {
+//    private MultipartFile iconFile;
+//    
+//
+//	public MultipartFile getIconFile() {
+//		return iconFile;
+//	}
+//
+//	public void setIconFile(MultipartFile iconFile) {
+//		this.iconFile = iconFile;
+//	}
+
+	public Integer getSort() {
 		return sort;
 	}
 

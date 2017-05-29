@@ -31,7 +31,7 @@
 		<div>
 			<h1>后台登陆</h1>
 		</div>
-		<form action="${ctx}/user/login" method="post">
+		<form action="${ctx}/user/login.do" method="post">
 			<div style="margin-bottom: 20px">
 			<input class="easyui-textbox" type="text" name="username" data-options="prompt:'输入账号'" />
 			</div>

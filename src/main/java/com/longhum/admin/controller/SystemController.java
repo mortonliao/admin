@@ -36,53 +36,92 @@ public class SystemController {
 	@Autowired
 	private SysUserRoleService userRoleService;
 	
-	@RequestMapping("/menuList")
+	@RequestMapping("/menuList.do")
 	@ResponseBody
 	public List<SysResource> menuList(HttpServletRequest request,Integer id,String preantIds){
-		List<SysResource> list = sysService.findByParentIdAndUserName(id, preantIds, (String)SecurityUtils.getSubject().getPrincipal(),"menu");
+		List<SysResource> list = sysService.findByUserNameOrParentIdOrPreateIdsOrType(id, preantIds,(String)SecurityUtils.getSubject().getPrincipal(),"menu");
 		return list;
 	}
 	
-	@RequestMapping("/permission")
+	@RequestMapping("/permission.do")
 	public String permission(HttpServletRequest request,ModelMap map){
 		List<SysRole> list = userRoleService.findAllRole();
 		map.put("list", list);
 		return "system/permission";
 	}
 	
-	@RequestMapping("/role")
+	@RequestMapping("/role.do")
 	public String role(HttpServletRequest request,ModelMap map){
 		List<SysRole> list = userRoleService.findAllRole();
 		map.put("list", list);
 		return "system/role";
 	}
 	
-	@RequestMapping("/roleList")
+	@RequestMapping("/deleteRole.do")
+	public String deleteRole(HttpServletRequest request,ModelMap map,Long roleId){
+		userRoleService.deleteRoleById(roleId);
+		List<SysRole> list = userRoleService.findAllRole();
+		map.put("list", list);
+		return "system/permission";
+	}
+	
+	@RequestMapping("/roleList.do")
 	@ResponseBody
 	public List<SysRole> roleList(HttpServletRequest request,Integer id){
 		List<SysRole> list = userRoleService.findAllRole();
 		return list;
 	}
 	
-	@RequestMapping("/saveRole")
+	@RequestMapping("/saveRole.do")
+	public String saveRole(HttpServletRequest request,ModelMap map,SysRole role){
+		sysService.saveSysRole(role);
+		List<SysRole> list = userRoleService.findAllRole();
+		map.put("list", list);
+		return "system/permission";
+	}
+	@RequestMapping("/findRoleById.do")
 	@ResponseBody
-	public ResultSimpleDate saveRole(HttpServletRequest request,Integer id){
-		return ResultSimpleDate.ok("新建账户成功");
+	public ResultSimpleDate findRoleById(HttpServletRequest request, Long roleId){
+		SysRole role = sysService.findRoleById(roleId);
+		return ResultSimpleDate.ok("查询成功",role);
 	}
 	
-	@RequestMapping("/saveRolePermission")
+	@RequestMapping("/saveRolePermission.do")
 	@ResponseBody
-	public String saveRolePermission(HttpServletRequest request,@RequestParam("roleId") Integer roleId ,
-			@RequestParam(name="addList[]",required=false) List<Integer> addList,@RequestParam(name="removeList[]",required=false) List<Integer> removeList){
-		List<SysResource> list = sysService.findByParentIdAndUserName(null, null,(String)SecurityUtils.getSubject().getPrincipal(), null);
+	public String saveRolePermission(HttpServletRequest request,@RequestParam("roleId") Long roleId ,
+			@RequestParam(name="addList[]",required=false) List<Long> addList,@RequestParam(name="removeList[]",required=false) List<Long> removeList){
+		List<SysResource> list = sysService.findByUserNameOrParentIdOrPreateIdsOrType(null, null,(String)SecurityUtils.getSubject().getPrincipal(), null);
 		List<SysRoleResource> roleResourcesList = new ArrayList<SysRoleResource>();
-		for (Integer id : addList) {
+		for (Long id : addList) {
 			SysResource r = new SysResource();
 			r.setId(Long.valueOf(id));
 			if(!list.contains(r)){
 				SysRoleResource rr = new SysRoleResource();
-				rr.setResourceId(id);
-				rr.setRoleId(roleId);
+				rr.setResourceId(id.hashCode());
+				rr.setRoleId(roleId.intValue());
+				roleResourcesList.add(rr);
+			}
+		}
+		
+		sysService.saveSysRoleResourceList(roleResourcesList);
+		
+		sysService.deleteSysRoleResourceList(roleId,removeList);
+		
+		return "操作成功";
+	}
+	@RequestMapping("/saveRolePermission2.do")
+	@ResponseBody
+	public String saveRolePermission2(HttpServletRequest request,@RequestParam("roleId") Long roleId ,
+			@RequestParam(name="addList[]",required=false) List<Long> addList,@RequestParam(name="removeList[]",required=false) List<Long> removeList){
+		List<SysResource> list = sysService.findByRoleId(roleId);
+		List<SysRoleResource> roleResourcesList = new ArrayList<SysRoleResource>();
+		for (Long id : addList) {
+			SysResource r = new SysResource();
+			r.setId(Long.valueOf(id));
+			if(!list.contains(r)){
+				SysRoleResource rr = new SysRoleResource();
+				rr.setResourceId(id.intValue());
+				rr.setRoleId(roleId.intValue());
 				roleResourcesList.add(rr);
 			}
 		}

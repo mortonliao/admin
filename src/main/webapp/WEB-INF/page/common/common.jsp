@@ -14,6 +14,7 @@
 <link rel="stylesheet" type="text/css" href="${ctx}/plug/jquery-easyui-1/themes/icon.css">
        
 <script type="text/javascript" src="${ctx}/plug/jquery-easyui-1/jquery.min.js"></script>
+<script type="text/javascript" src="${ctx}/js/jquery.form.js"></script>
 <script type="text/javascript" src="${ctx}/plug/jquery-easyui-1/jquery.easyui.min.js"></script>
 
 <!-- ztree -->

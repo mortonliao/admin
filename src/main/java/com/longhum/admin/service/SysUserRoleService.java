@@ -8,4 +8,6 @@ public interface SysUserRoleService {
 
 	List<SysRole> findAllRole();
 
+	void deleteRoleById(Long id);
+
 }

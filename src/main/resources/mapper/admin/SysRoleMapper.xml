@@ -26,9 +26,9 @@
     select 
     <include refid="Base_Column_List" />
     from sys_role
-    where id in(
-    	select role_id from sys_role_user 
-    	where user_id = #{userId}
+    where id =(
+    	select role_id from sys_user 
+    	where id = #{userId}
     )
   </select>
   <delete id="delete" parameterType="java.lang.Long" >

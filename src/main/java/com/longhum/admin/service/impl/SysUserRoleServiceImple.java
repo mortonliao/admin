@@ -20,4 +20,9 @@ public class SysUserRoleServiceImple implements SysUserRoleService{
 		return roleDao.findAll();
 	}
 
+	@Override
+	public void deleteRoleById(Long id) {
+		roleDao.delete(id);
+	}
+
 }

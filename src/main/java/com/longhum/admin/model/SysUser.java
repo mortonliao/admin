@@ -3,7 +3,7 @@ package com.longhum.admin.model;
 public class SysUser {
     private Long id;
 
-    private Long groupId;
+    private Long roleId;
 
     private String username;
 
@@ -15,7 +15,17 @@ public class SysUser {
 
     private Boolean status;
 
-    public Long getId() {
+    private String roleName;
+    
+    public String getRoleName() {
+		return roleName;
+	}
+
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
+
+	public Long getId() {
         return id;
     }
 
@@ -23,15 +33,16 @@ public class SysUser {
         this.id = id;
     }
 
-    public Long getGroupId() {
-        return groupId;
-    }
 
-    public void setGroupId(Long groupId) {
-        this.groupId = groupId;
-    }
+    public Long getRoleId() {
+		return roleId;
+	}
 
-    public String getUsername() {
+	public void setRoleId(Long roleId) {
+		this.roleId = roleId;
+	}
+
+	public String getUsername() {
         return username;
     }
 
@@ -48,7 +59,7 @@ public class SysUser {
     }
 
     public String getSalt() {
-        return username+salt;
+        return salt;
     }
 
     public void setSalt(String salt) {
@@ -73,9 +84,13 @@ public class SysUser {
 
 	@Override
 	public String toString() {
-		return "SysUser [id=" + id + ", groupId=" + groupId + ", username=" + username + ", password=" + password
-				+ ", salt=" + salt + ", locked=" + locked + ", status=" + status + "]";
+		return "SysUser [id=" + id + ", roleId=" + roleId + ", username=" + username + ", password=" + password
+				+ ", salt=" + salt + ", locked=" + locked + ", status=" + status + ", roleName=" + roleName + "]";
 	}
-    
+
+	public String generateSalt() {
+		return  username+salt;
+	}
+
     
 }

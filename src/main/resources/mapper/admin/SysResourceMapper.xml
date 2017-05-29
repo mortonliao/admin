@@ -28,25 +28,40 @@
     from sys_resource
     order by sort
   </select>
+  <select id="findByRoleId" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_resource where id in(
+    	select resource_id from sys_role_resource
+	    	where role_id = #{roleId}
+    )
+    order by sort
+  </select>
               
-  <select id="findFirstByParentIdAndUserId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="findByRoleIdOrParentIdOrPreateIdsOrType" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from sys_resource
-    where 
-	    id in(
-	    	select resource_id from sys_role_resource
-	    	where role_id in(
-	    		select role_id from sys_role_user 
-	    		where user_id = #{userId}
-	    	)
-	    )
-	    <if test="parentId != null" >
+    <where>
+    	<if test="parentId != null" >
 	        and parent_id = #{parentId}
 	    </if>
-	    order by sort
+	    <if test="parentIds != null" >
+	        and parent_ids like '%${parentIds}%'
+	    </if>
+	    <if test="type != null" >
+	        and type=#{type}
+	    </if>
+	    <if test="roleId != null">
+	    	and id in(
+	    	select resource_id from sys_role_resource
+	    	where role_id = #{roleId}
+	    )
+	    </if>
+    </where>
+	order by sort
   </select>
-  <select id="findByParentIdAndUserId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <!-- <select id="findByParentIdAndUserId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from sys_resource
@@ -68,7 +83,7 @@
 	        and type=#{type}
 	    </if>
 	    order by sort
-  </select>
+  </select> -->
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from sys_resource
     where id = #{id,jdbcType=BIGINT}

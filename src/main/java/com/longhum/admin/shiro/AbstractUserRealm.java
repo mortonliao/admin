@@ -75,7 +75,7 @@ public abstract class AbstractUserRealm extends AuthorizingRealm {
         if (user != null) {
             // 若存在，将此用户存放到登录认证info中，无需自己做密码对比，Shiro会为我们进行密码对比校验
             return new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), 
-            		ByteSource.Util.bytes(user.getSalt()),getName());
+            		ByteSource.Util.bytes(user.generateSalt()),getName());
         
         }
         return null;
