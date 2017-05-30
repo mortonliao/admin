@@ -17,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -107,6 +108,12 @@ public class UserController {
 	public ResultSimpleDate findUserById(Long userId){
 		SysUser user = userService.findById(userId);
 		return ResultSimpleDate.ok("查询成功", user);
+	}
+	@PostMapping("/resetPwd.do")
+	@ResponseBody
+	public ResultSimpleDate resetPwd(@RequestParam("ids[]") List<Long> ids){
+		userService.resetPwd(ids);
+		return ResultSimpleDate.ok("重置密码成功");
 	}
 	
 	@GetMapping("/deleteUser.do")

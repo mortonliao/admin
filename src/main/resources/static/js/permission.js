@@ -56,7 +56,7 @@ function setFontCss(treeId, treeNode) {
 };
 
 function queryPermissionByRoleId(roleId){
-	$.get(getRootPath()+'/resource/allResource3.do',{'roleId':roleId},function(data){
+	$.get(webName+'/resource/allResource3.do',{'roleId':roleId},function(data){
 		var zTreeObj = $.fn.zTree.init($("#tree"), setting, data);
 	});
 	$('#permissionList').dialog({
@@ -84,13 +84,13 @@ function queryPermissionByRoleId(roleId){
 				$.ajax({
 					type:'post',
 					async:false,
-					url:getRootPath()+'/resource/saveRolePermission2',
+					url:webName+'/system/saveRolePermission2.do',
 					data:{'roleId':roleId,'addList':addList,'removeList':removeList},
 					success:function(data){
 						$("#permissionList").dialog('close');
 						$.messager.show({
 							title:'操作提示',
-							msg:data,
+							msg:data.msg,
 							showType:'fade',
 							timeout:3,
 							style:{
@@ -100,16 +100,11 @@ function queryPermissionByRoleId(roleId){
 						});
 					},
 					error:function(data){
-						$.messager.show({
-							title:'操作提示',
-							msg:data,
-							showType:'fade',
-							timeout:3,
-							style:{
-								right:'',
-								bottom:''
-							}
-						});
+						$.messager.alert(
+							'操作提示',
+							data,
+							'error'
+						);
 					}
 				});
 			}
@@ -122,9 +117,3 @@ function queryPermissionByRoleId(roleId){
 		}]
 	});
 }
-
-function getRootPath() {  
-    var pathName = window.location.pathname.substring(1);  
-    var webName = pathName == '' ? '' : pathName.substring(0, pathName.indexOf('/'));  
-    return window.location.protocol + '//' + window.location.host + '/' + webName + '/';  
-}  

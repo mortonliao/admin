@@ -1,6 +1,6 @@
 setting = {
 	view : {
-		showLine : false,
+		showLine : true,
 		expandSpeed : "normal",
 		selectedMulti : false,
 		fontCss : setFontCss,

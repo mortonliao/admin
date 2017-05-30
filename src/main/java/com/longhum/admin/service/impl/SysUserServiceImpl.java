@@ -64,6 +64,17 @@ public class SysUserServiceImpl implements SysUserService{
 	public void deleteUser(Long userId) {
 		userDao.delete(userId);
 	}
+	@Override
+	public void resetPwd(List<Long> ids) {
+		if(ids != null){
+			for (Long id : ids) {
+				SysUser user = userDao.findById(id);
+				String pwd = ShiroUtil.encryptUser(user.getUsername()+"1234",user.generateSalt());
+				user.setPassword(pwd);
+				userDao.update(user);
+			}
+		}
+	}
 	
 
 }

@@ -1,7 +1,5 @@
 package com.longhum.admin.model;
 
-import org.springframework.web.multipart.MultipartFile;
-
 public class SysResource {
     private Long id;
 

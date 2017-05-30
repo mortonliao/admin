@@ -126,4 +126,15 @@ public class SysServiceImpl implements SysService{
 		return resourceDao.findByRoleId(roleId);
 	}
 
+	@Override
+	public void initResourceList(List<SysResource> list,String contextPath) {
+		if(list != null){
+			for (SysResource sr : list) {
+				if(sr.getIcon() != null ){
+					sr.setIcon(contextPath+sr.getIcon());
+				}
+			}
+		}
+	}
+
 }

@@ -30,8 +30,19 @@ public class HomeController {
     public ModelAndView index(ModelMap map,HttpServletRequest request){
 		Subject subject = SecurityUtils.getSubject();
 		List<SysResource> list = sysService.findByUserNameOrParentIdOrPreateIdsOrType(1,null,(String)subject.getPrincipal(),"menu");
+		if(list != null){
+			for (SysResource sr : list) {
+				if(sr.getIcon() != null ){
+					sr.setIcon(request.getContextPath()+sr.getIcon());
+				}
+			}
+		}
 		map.put("menuList", list);
 		
         return new ModelAndView("index");
     }
+	@RequestMapping("/403")
+	public ModelAndView page403(ModelMap map,HttpServletRequest request){
+		return new ModelAndView("page403");
+	}
 }

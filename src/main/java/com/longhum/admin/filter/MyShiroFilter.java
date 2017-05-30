@@ -29,7 +29,7 @@ public class MyShiroFilter {
 		//SecurityUtils.setSecurityManager(securityManager);
 		shiroFilterFactoryBean.setSecurityManager(securityManager);
 		shiroFilterFactoryBean.setLoginUrl("/user/login.do");
-		shiroFilterFactoryBean.setSuccessUrl("/");
+		//shiroFilterFactoryBean.setSuccessUrl("/index.do");
 		shiroFilterFactoryBean.setUnauthorizedUrl("/403");
 		
 		/*定义shiro过滤链 Map结构 * Map中key(xml中是指value值)的第一个'/'代表的路径是相对于HttpServletRequest.getContextPath()的值来的 * anon：
@@ -54,9 +54,9 @@ public class MyShiroFilter {
         	for (SysResource sysResource : list) {
         		if(sysResource.getPath() != null && sysResource.getPath().trim().length() > 0){
         			if(!sysResource.getPath().startsWith("/")){
-        				filterChainDefinitionMap.put("/"+sysResource.getPath()+".do", "perms["+sysResource.getPermission()+"]");
+        				filterChainDefinitionMap.put("/"+sysResource.getPath(), "perms["+sysResource.getPermission()+"]");
         			}else{
-        				filterChainDefinitionMap.put(sysResource.getPath()+".do", "perms["+sysResource.getPermission()+"]");
+        				filterChainDefinitionMap.put(sysResource.getPath(), "perms["+sysResource.getPermission()+"]");
         			}
         		}
         	}

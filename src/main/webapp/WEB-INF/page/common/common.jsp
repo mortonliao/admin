@@ -14,8 +14,10 @@
 <link rel="stylesheet" type="text/css" href="${ctx}/plug/jquery-easyui-1/themes/icon.css">
        
 <script type="text/javascript" src="${ctx}/plug/jquery-easyui-1/jquery.min.js"></script>
+<script type="text/javascript" src="${ctx}/js/globe.js"></script>
 <script type="text/javascript" src="${ctx}/js/jquery.form.js"></script>
 <script type="text/javascript" src="${ctx}/plug/jquery-easyui-1/jquery.easyui.min.js"></script>
+<script src="${ctx}/plug/jquery-easyui-1/locale/easyui-lang-zh_CN.js"></script>
 
 <!-- ztree -->
 <link rel="stylesheet" href="${ctx}/plug/zTree_v3-master/css/zTreeStyle/zTreeStyle.css" type="text/css">

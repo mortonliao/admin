@@ -42,13 +42,7 @@ public class ResourceController {
 	@ResponseBody
 	public List<SysResource> allResource(HttpServletRequest request){
 		List<SysResource> list = sysService.findAllMenu();
-		if(list != null){
-			for (SysResource sr : list) {
-				if(sr.getIcon() != null ){
-					sr.setIcon(request.getContextPath()+sr.getIcon());
-				}
-			}
-		}
+		sysService.initResourceList(list,request.getContextPath());
 		return list;
 	}
 	@RequestMapping("/allResource2.do")
@@ -56,16 +50,13 @@ public class ResourceController {
 	public List<TreeResource> allresource2(HttpServletRequest request){
 		List<SysResource> list = sysService.findAllMenu();
 		List<SysResource> list2 = sysService.findByUserNameOrParentIdOrPreateIdsOrType(null,null,(String)SecurityUtils.getSubject().getPrincipal(), null);
-		
+		sysService.initResourceList(list,request.getContextPath());
 		List<TreeResource> result = new ArrayList<TreeResource>();
 		for (SysResource sysResource : list) {
 			TreeResource r = new TreeResource();
 			BeanUtils.copyProperties(sysResource, r);
 			if(list2.contains(sysResource)){
 				r.setChecked(true);
-			}
-			if(r.getIcon() != null){
-				r.setIcon(request.getContextPath()+r.getIcon());
 			}
 			result.add(r);
 		}
@@ -76,16 +67,13 @@ public class ResourceController {
 	public List<TreeResource> allresource3(HttpServletRequest request,Long roleId){
 		List<SysResource> list = sysService.findAllMenu();
 		List<SysResource> list2 = sysService.findByRoleId(roleId);
-		
+		sysService.initResourceList(list,request.getContextPath());
 		List<TreeResource> result = new ArrayList<TreeResource>();
 		for (SysResource sysResource : list) {
 			TreeResource r = new TreeResource();
 			BeanUtils.copyProperties(sysResource, r);
 			if(list2.contains(sysResource)){
 				r.setChecked(true);
-			}
-			if(r.getIcon() != null){
-				r.setIcon(request.getContextPath()+r.getIcon());
 			}
 			result.add(r);
 		}

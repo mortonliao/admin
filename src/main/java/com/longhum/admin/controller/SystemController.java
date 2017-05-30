@@ -13,10 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.longhum.admin.entity.ResultSimpleDate;
-import com.longhum.admin.entity.TreeResource;
 import com.longhum.admin.model.SysResource;
 import com.longhum.admin.model.SysRole;
 import com.longhum.admin.model.SysRoleResource;
@@ -40,6 +37,13 @@ public class SystemController {
 	@ResponseBody
 	public List<SysResource> menuList(HttpServletRequest request,Integer id,String preantIds){
 		List<SysResource> list = sysService.findByUserNameOrParentIdOrPreateIdsOrType(id, preantIds,(String)SecurityUtils.getSubject().getPrincipal(),"menu");
+		if(list != null){
+			for (SysResource sr : list) {
+				if(sr.getIcon() != null ){
+					sr.setIcon(request.getContextPath()+sr.getIcon());
+				}
+			}
+		}
 		return list;
 	}
 	
@@ -111,7 +115,7 @@ public class SystemController {
 	}
 	@RequestMapping("/saveRolePermission2.do")
 	@ResponseBody
-	public String saveRolePermission2(HttpServletRequest request,@RequestParam("roleId") Long roleId ,
+	public ResultSimpleDate saveRolePermission2(HttpServletRequest request,@RequestParam("roleId") Long roleId ,
 			@RequestParam(name="addList[]",required=false) List<Long> addList,@RequestParam(name="removeList[]",required=false) List<Long> removeList){
 		List<SysResource> list = sysService.findByRoleId(roleId);
 		List<SysRoleResource> roleResourcesList = new ArrayList<SysRoleResource>();
@@ -129,8 +133,7 @@ public class SystemController {
 		sysService.saveSysRoleResourceList(roleResourcesList);
 		
 		sysService.deleteSysRoleResourceList(roleId,removeList);
-		
-		return "操作成功";
+		return ResultSimpleDate.ok("修改成功");
 	}
 	
 }

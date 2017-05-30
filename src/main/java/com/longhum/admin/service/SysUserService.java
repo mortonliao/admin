@@ -15,4 +15,6 @@ public interface SysUserService {
 
 	void deleteUser(Long userId);
 
+	void resetPwd(List<Long> ids);
+
 }

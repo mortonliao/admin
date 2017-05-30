@@ -30,4 +30,6 @@ public interface SysService {
 	SysRole findRoleById(Long roleId);
 
 	List<SysResource> findByRoleId(Long roleId);
+
+	void initResourceList(List<SysResource> list,String contextPath);
 }

@@ -49,7 +49,8 @@ function editRole(roleId){
 }
 
 $(document).ready(function() {
-	
+	var p = window.href;
+	console.log(p);
 });
 </script>
 </head>
